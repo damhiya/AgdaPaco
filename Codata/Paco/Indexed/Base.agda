@@ -31,7 +31,7 @@ module _ {I : Set i} {C : Container I I c r} where
     ; snd = λ r → Paco⇒M (proj₂ unfolded r)
     }
     where
-      unfolded : ⟦ C ⟧ (Paco C (const ⊥)) _
+      unfolded : ⟦ C ⟧ (Paco C ∅) _
       unfolded = Container.map C
         {X = ∅ ∪ Paco C ∅}
         {Y = Paco C ∅}
