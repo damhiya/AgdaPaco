@@ -28,3 +28,16 @@ module _ {i c r} {I : Set i} {C : Container I I c r} where
   
       coalg : Paco C (Γ ∪ Δ) ⊆ ⟦ C ⟧ (Γ ∪ Paco C (Γ ∪ Δ))
       coalg = Container.map C (λ {i} → aux {x = i}) ∘ Paco.unfold
+
+  mult : ∀ {Γ : Pred I a} → Paco C (Γ ∪ Paco C Γ) ⊆ Paco C Γ
+  Paco.unfold (mult {Γ = Γ} paco) = record
+    { fst = proj₁ unfold
+    ; snd = λ r → case (proj₂ unfold r) of λ
+      { (inj₁ x) → x
+      ; (inj₂ x) → inj₂ (mult x)
+      }
+    }
+    where open Paco.Paco paco
+
+  multiplication : ∀ {Γ : Pred I a} → Paco C (Paco C Γ) ⊆ Paco C Γ
+  multiplication {Γ = Γ} H = mult (Paco.map inj₂ H)
