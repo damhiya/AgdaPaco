@@ -2,15 +2,13 @@
 
 module Codata.Paco.Indexed.Properties where
 
+open import Codata.Paco.Indexed.Base as Paco
+open import Data.Container.Indexed as Container
+open import Data.Product
+open import Data.Sum
+open import Function.Base
 open import Level
 open import Relation.Unary
-
-open import Data.Empty
-open import Data.Product
-open import Data.Sum as Sum
-open import Function.Base
-open import Data.Container.Indexed as Container
-open import Codata.Paco.Indexed.Base as Paco
 
 private
   variable
@@ -27,7 +25,7 @@ module _ {i c r} {I : Set i} {C : Container I I c r} where
       aux (inj₂ x)        = inj₂ x
   
       coalg : Paco C (Γ ∪ Δ) ⊆ ⟦ C ⟧ (Γ ∪ Paco C (Γ ∪ Δ))
-      coalg = Container.map C (λ {i} → aux {x = i}) ∘ Paco.unfold
+      coalg = Container.map C (λ {i} → aux {i}) ∘ Paco.unfold
 
   mult : ∀ {Γ : Pred I a} → Paco C (Γ ∪ Paco C Γ) ⊆ Paco C Γ
   Paco.unfold (mult {Γ = Γ} paco) = record
